@@ -1,5 +1,4 @@
-#source("/Users/npetraco/latex/class/chem302/R/oscillators/Numerov.functions.R")
-source(file.choose())
+#source(file.choose())
 
 #Domain (x-axis):
 dx    <- 0.01                           #Increment on x-axis
