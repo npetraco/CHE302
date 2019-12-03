@@ -1,7 +1,7 @@
 source("https://npetraco.github.io/CHE302/Laboratories/Lab6/ft_spectroscopy.func.R")
 
 # Load the interferogram:
-dat <- read.csv("https://npetraco.github.io/CHE302/Laboratories/Lab6/interferogram.csv", header=T)
+dat <- read.csv("https://npetraco.github.io/CHE302/Laboratories/Lab6/interferogram.csv", header=F)
 dat <- as.matrix(dat)
 
 # Plot the interferogram:
