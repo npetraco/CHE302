@@ -2,6 +2,8 @@ library(rgl)
 library(orthopolynom)
 library(parallel)
 library(doMC)
+library(doSNOW)
+
 
 #Convert spherical coordinates to cartesian coordinates
 spherical.to.cartesian<-function(rl,tha,pha) {
@@ -12,6 +14,15 @@ spherical.to.cartesian<-function(rl,tha,pha) {
   return(c(x,y,z))
 }
 
+#Convert cartesian coordinates to spherical coordinates
+cartesian.to.spherical<-function(xx.in,yy.in,zz.in) {
+  
+  rl  <- sqrt(xx.in^2 + yy.in^2 + zz.in^2)
+  tha <- acos(zz.in/rl)
+  pha <- atan(xx.in/yy.in)
+
+  return(c(rl,tha,pha))
+}
 
 #Sample the wave function's density and plot corresponding r,theta, phi (x,y,z) values
 #Recipie adapted from D. Cromer, J Chem Educ. 45(10) 626-631 1968
@@ -68,7 +79,8 @@ Radial<-function(nn,ll,rr){
   lag.poly <- laguerreLgen(nn-ll-1, 2*ll+1)
   #print(lag.poly)
   
-  Radial.vals <- exp(-rr/nn) * rr^ll * polynomial.values(lag.poly,rr)[[1]]
+  #Radial.vals <- exp(-rr/nn) * rr^ll * polynomial.values(lag.poly,rr)[[1]]
+  Radial.vals <- sqrt(factorial(nn-ll-1)/factorial(nn+ll)) * exp(-rr/nn) * (2*rr/nn)^ll * (2/(nn)^2) * polynomial.values(lag.poly,2*rr/nn)[[1]]
   
   return(Radial.vals)
   
@@ -78,7 +90,7 @@ Radial<-function(nn,ll,rr){
 #Angular wavefunction using the Numerical Recipies routine
 #
 
-#There is no associated Legendre polynomial or shpherical harmonic in orthopolynom, so we have to do it ourselves
+#There is no associated Legendre polynomial or spherical harmonic in orthopolynom, so we have to do it ourselves
 
 #Generates the symbolic expression for a Legendre polynomial
 legendrePgen<-function(ll){
@@ -126,14 +138,17 @@ LegendreP<-function(ll,mm,thetaa){
     vals <- (-1)^mm * factorial(ll-mm)/factorial(ll+mm) * vals
   }
   
-  return(vals)
+  normLP <- sqrt(((2*ll + 1)*factorial(ll - abs(mm)))/(2*factorial(ll + abs(mm))))
+  
+  return(normLP * vals)
+  #return(vals)
   
 }
 
 #Compute the (numerical) Phi wave function for the equitorial angle
 PhiF<-function(mm,phii){
   
-  return(exp((mm*complex(real = 0, imaginary = 1))*phii))
+  return(1/sqrt(2*pi) * exp((mm*complex(real = 0, imaginary = 1))*phii))
   
 }
 
@@ -195,20 +210,22 @@ proposal <- function(theta.curr, proposal.wid){sapply(1:length(theta.curr), func
 # Log Density ansatz. Pass in splined function info to hide from user. ****Looks yucky though!
 ansatz <- function(a.theta, R.den.func, Th.den.func, Ph.den.func, rax.ext){
   
+  # abs the density functions incase they go slightly negative
+  
   if((a.theta[1] > 0) & (a.theta[1] <= rax.ext)){
-    val1 <- log( a.theta[1]^2 * R.den.func(a.theta[1])  )  # Replaces: Radial(n, l, a.theta[1])^2 
+    val1 <- log( a.theta[1]^2 * abs(R.den.func(a.theta[1]))  )  # Replaces: Radial(n, l, a.theta[1])^2 
   } else {
     val1 <- log(0)
   }
   
   if( (a.theta[2] >= 0) & (a.theta[2] <= pi) ) {
-    val2 <- log( sin(a.theta[2]) * Th.den.func(a.theta[2]) ) # Replaces: (LegendreP(l, m, a.theta[2]))^2
+    val2 <- log( sin(a.theta[2]) * abs(Th.den.func(a.theta[2])) ) # Replaces: (LegendreP(l, m, a.theta[2]))^2
   } else {
     val2 <- log(0)
   }
   
   if( (a.theta[3] >= 0) & (a.theta[3] <= 2*pi)){
-    val3 <- log( Ph.den.func(a.theta[3]) )                   # Replaces: Re(PhiF(m, a.theta[3]))^2
+    val3 <- log( abs(Ph.den.func(a.theta[3])) )                   # Replaces: Re(PhiF(m, a.theta[3]))^2
   } else {
     val3 <- log(0)
   }
@@ -305,7 +322,7 @@ sample.density3a<-function(nqn, lqn, mqn, orb.func.info, num.samples=5000, num.t
   
 }
 
-# Wrapper to run MCMC for the orbital densities:
+# Wrapper to run MCMC for the orbital densities. This one we can input the proposal jump widths:
 sample.density3b<-function(nqn, lqn, mqn, orb.func.info, num.samples=5000, num.thin=1, num.burnin=0, jump.widths=c(1,1,1), printQ=FALSE) {
   
   mpi  <- sampler.gen(
@@ -349,67 +366,30 @@ sample.density3b<-function(nqn, lqn, mqn, orb.func.info, num.samples=5000, num.t
 }
 
 
-# VERY stripped down wrapper (to a wrapper: sample.density3b) to run MCMC twice. First run is a very correlated cheat to get the inner radial nodes. 
-# Second run is a regular run to get the rest of the orbital density
-sample.orbital.density<-function(nqn, lqn, mqn, orb.func.info, printQ=TRUE) {
+# VERY stripped down wrapper (to a wrapper: sample.density3b) to run MCMC. CHECK THAT WE GOT ALL THE NODES THOUGH! MCMC by itself can easily miss
+sample.orbital.density.mcmc<-function(nqn, lqn, mqn, orb.func.info, printQ=FALSE) {
   
-  print("====== First (cheat) pass to try and get inner nodes (if any) ======")
-  density.samples.loc <- sample.density3b(nqn, lqn, mqn, orb.func.info, 
-                                          num.samples=25000,               # Preset by experience
-                                          num.thin = 40,                   # Preset by experience
-                                          jump.widths = c(0.25,2.38,2.38), # Preset by experience
-                                          num.burnin = 2,                  # Preset by experience
-                                          printQ)
-  x.loc <- density.samples.loc[,1]
-  y.loc <- density.samples.loc[,2]
-  z.loc <- density.samples.loc[,3]
-  print("Chain 1 done.")
-  for(i in 2:4){
-    density.samples.loc <- sample.density3b(nqn, lqn, mqn, orb.func.info, 
-                                            num.samples=25000,               # Preset by experience
-                                            num.thin = 40,                   # Preset by experience
-                                            jump.widths = c(0.25,2.38,2.38), # Preset by experience
-                                            num.burnin = 2,                  # Preset by experience
-                                            printQ)
-    x.loc <- c(x.loc, density.samples.loc[,1])
-    y.loc <- c(y.loc, density.samples.loc[,2])
-    z.loc <- c(z.loc, density.samples.loc[,3])
-    print(paste("Chain", i, "done."))
-    
-  }
+  print("====== Normal pass ======")
+  normal.pass.samp.size <- 187500
   
-  print("====== Second pass to get outer parts ======")
-  density.samples2.loc <- sample.density3b(nqn, lqn, mqn, orb.func.info, 
-                                           num.samples=125000,              # Preset by experience
-                                           num.thin = 150,                  # Preset by experience
-                                           jump.widths = c(2.38,2.38,2.38), # Preset by experience
-                                           num.burnin = 100,                # Preset by experience
+  samp.coords <- NULL
+  
+   for(i in 1:4) {
+     
+     print(paste("---- Starting Chain:", i, "----"))
+     
+     samp.coords <- rbind(samp.coords, 
+                          sample.density3b(nqn, lqn, mqn, orb.func.info, 
+                                           num.samples = normal.pass.samp.size,
+                                           num.thin    = 150,                  
+                                           jump.widths = c(2.38,2.38,2.38),    
+                                           num.burnin  = 100,                  
                                            printQ)
-  
-  x.loc <- c(x.loc, density.samples2.loc[,1])
-  y.loc <- c(y.loc, density.samples2.loc[,2])
-  z.loc <- c(z.loc, density.samples2.loc[,3])
-  print("Chain 1 done.")
-  
-  for(i in 2:4) {
-
-    density.samples2.loc <- sample.density3b(nqn, lqn, mqn, orb.func.info, 
-                                             num.samples=125000,              # Preset by experience
-                                             num.thin = 150,                  # Preset by experience
-                                             jump.widths = c(2.38,2.38,2.38), # Preset by experience
-                                             num.burnin = 100,                # Preset by experience
-                                             printQ)
-    
-    x.loc <- c(x.loc, density.samples2.loc[,1])
-    y.loc <- c(y.loc, density.samples2.loc[,2])
-    z.loc <- c(z.loc, density.samples2.loc[,3])
-    print(paste("Chain", i, "done."))
-        
+                          )
+     print(paste("---- Chain:", i, "Done ----"))
   }
   
-  samp.coords <- cbind(x.loc, y.loc, z.loc)
-  
-  colnames(samp.coords) <- c("x","y","z")
+  colnames(samp.coords) <- c("x","y","z","r","theta","phi")
   
   print(paste("The total final sample size is:", nrow(samp.coords)))
   
@@ -418,46 +398,338 @@ sample.orbital.density<-function(nqn, lqn, mqn, orb.func.info, printQ=TRUE) {
 }
 
 
-# Simple parallel version of sample.orbital.density(). Run the chains in separate processes
-sample.orbital.density.parallel<-function(nqn, lqn, mqn, orb.func.info, printQ=FALSE, num.processes=1) {
-  
+# VERY stripped down wrapper (to a wrapper: sample.density3b) to run MCMC. CHECK THAT WE GOT ALL THE NODES THOUGH! MCMC by itself can easily miss
+# Simple parallel version: Run the chains in separate processes
+sample.orbital.density.mcmc.parallel<-function(nqn, lqn, mqn, orb.func.info, printQ=FALSE, num.processes=1) {
   
   registerDoMC(num.processes)
+
   print(paste("Using",getDoParWorkers(), "processes."))
   
-  print("====== First (cheat) pass to try and get inner nodes (if any) ======")
-  density.samples.loc <- foreach(i=1:4, .combine="rbind") %dopar% {  
-    density.samples.loc <- sample.density3b(nqn, lqn, mqn, orb.func.info, 
-                                            num.samples=25000,               # Preset by experience
-                                            num.thin = 40,                   # Preset by experience
-                                            jump.widths = c(0.25,2.38,2.38), # Preset by experience
-                                            num.burnin = 2,                  # Preset by experience
-                                            printQ)
-  }
-  x.loc <- density.samples.loc[,1]
-  y.loc <- density.samples.loc[,2]
-  z.loc <- density.samples.loc[,3]
-
-  print("====== Second pass to get outer parts ======")
-  density.samples2.loc <- foreach(i=1:4, .combine="rbind") %dopar% {
+  print("====== Normal pass ======")
+  normal.pass.samp.size <- 187500
+  
+  samp.coords <- foreach(i=1:4, .combine="rbind") %dopar% {
     sample.density3b(nqn, lqn, mqn, orb.func.info, 
-                     num.samples=125000,              # Preset by experience
-                     num.thin = 150,                  # Preset by experience
-                     jump.widths = c(2.38,2.38,2.38), # Preset by experience
-                     num.burnin = 100,                # Preset by experience
+                     num.samples = normal.pass.samp.size,
+                     num.thin    = 150,                  
+                     jump.widths = c(2.38,2.38,2.38),    
+                     num.burnin  = 100,                  
                      printQ)
   }
   
-  x.loc <- c(x.loc, density.samples2.loc[,1])
-  y.loc <- c(y.loc, density.samples2.loc[,2])
-  z.loc <- c(z.loc, density.samples2.loc[,3])
-
-  samp.coords <- cbind(x.loc, y.loc, z.loc)
   
-  colnames(samp.coords) <- c("x","y","z")
+  # x.loc <- density.samples2.loc[,1]
+  # y.loc <- density.samples2.loc[,2]
+  # z.loc <- density.samples2.loc[,3]
+  # 
+  # samp.coords <- cbind(x.loc, y.loc, z.loc)
+  # 
+  # colnames(samp.coords) <- c("x","y","z")
+  
+  colnames(samp.coords) <- c("x","y","z","r","theta","phi")
   
   print(paste("The total final sample size is:", nrow(samp.coords)))
   
   return(samp.coords)  
+  
+}
+
+
+# Sample the wave function's density using AIS
+# Recipie adapted from https://wiseodd.github.io/techblog/2017/12/23/annealed-importance-sampling/
+sample.orbital.density.ais<-function(nqn, lqn, mqn, orb.func.info, printQ=FALSE) {
+  
+  rsqf  <- orb.func.info$R.sq.func
+  thsqf <- orb.func.info$Theta.sq.func
+  phsqf <- orb.func.info$Phi.sq.func
+  rmx   <- max(orb.func.info$r.axis)
+  
+  # Work on the log-scale:
+  
+  # Target density f(0)
+  logf0 <- function(an.x){
+    
+    loglik0 <- 
+      log(an.x[1]^2    * abs(rsqf(an.x[1])) )  +  # abs-ing incase splines went a little negative 
+      log(sin(an.x[2]) * abs(thsqf(an.x[2])) ) + 
+      log(               abs(phsqf(an.x[3])) )
+    
+    return(loglik0)
+  }
+  
+  # Starting (Importance) density f(n)
+  logfn <- function(an.x){
+    
+    return(
+      dunif(an.x[1], min = 0, max = rmx,  log = T) + 
+        dunif(an.x[2], min = 0, max = pi,   log = T) + 
+        dunif(an.x[3], min = 0, max = 2*pi, log = T)
+    )
+    
+  }
+  
+  # Generates an initial starting point for a sample from importance distribution, x ~ p(n)
+  pn <- function(){
+    
+    return(
+      c(runif(1, min = 0, max = rmx), 
+        runif(1, min = 0, max = pi), 
+        runif(1, min = 0, max = 2*pi))
+    )
+    
+  }
+  
+  # Intermediate (annealing) densities
+  logfj <- function(an.x, a.beta){
+    return(a.beta * logf0(an.x) + (1-a.beta) * logfn(an.x))
+  }
+  
+  # Transition kernel to bridge from starting density to target density with short MCMCa
+  TransK <- function(an.x, a.beta, n.steps=10){
+    for(t in 1:n.steps) {
+      
+      # Proposal
+      x.prime <- c(NA,NA,NA)
+      
+      x.prime[1] <- an.x[1] + runif(1, min = -rmx, max = rmx)
+      if(x.prime[1] < 0) {
+        x.prime[1] <- x.prime[1] %% rmx  
+      } else if(x.prime[1] > rmx) {
+        x.prime[1] <- x.prime[1] %% rmx
+      }
+      
+      x.prime[2] <- an.x[2] + runif(1, min = -pi, max = pi)
+      if(x.prime[2] < 0) {
+        x.prime[2] <- x.prime[2] %% pi
+      } else if(x.prime[2] > pi){
+        x.prime[2] <- x.prime[2] %% pi
+      }
+      
+      x.prime[3] <- an.x[3] + runif(1, min = -2*pi, max = 2*pi)
+      if(x.prime[3] < 0) {
+        x.prime[3] <- x.prime[3] %% 2*pi
+      } else if(x.prime[3] > 2*pi){
+        x.prime[3] <- x.prime[3] %% 2*pi
+      }
+      
+      # log Acceptance prob
+      log.accp <- logfj(x.prime, a.beta) - logfj(an.x, a.beta)
+      
+      if(is.na( log.accp )){
+        print("Problem!!!!!!!")
+        print(paste("beta:", a.beta))
+        print(paste("x:", an.x))
+        print(paste("log f_j(x, beta)", lf_j(an.x, a.beta)))
+        print(paste("x.prime:", x.prime))
+        print(paste("log f_j(x.prime, beta)", lf_j(x.prime, a.beta)))
+      }
+      
+      out.x <- an.x
+      if(log(runif(1)) < log.accp){
+        out.x <- x.prime
+      }
+      
+    }
+    
+    return(out.x)
+    
+  }
+  
+  # Do the sampling
+  n.beta   <- 50 # Bridge over this many intermediate densities
+  beta.seq <- seq(from = 0, to = 1, length.out = n.beta) # Inverse temp sequence
+  
+  n.samples   <- 2500 # Sample size sought from target density
+  the.samples <- array(NA, c(n.samples,3))
+  the.weights <- numeric(n.samples)
+  
+  # Do the sampling
+  for(i in 1:n.samples){
+    
+    # Sample initial point from pn(x)
+    xi <- pn()
+    wi <- 1
+    
+    for(j in 2:length(beta.seq)){
+      
+      # Transition
+      xi <- TransK(xi, beta.seq[j], n.steps=5)
+      
+      # Compute weight in log space (log-sum):
+      wi <- wi + ( logfj(xi, beta.seq[j]) - logfj(xi, beta.seq[j-1]) )
+    }
+    
+    if(printQ == TRUE) {
+      print(paste("Done sample:", i))
+    }
+    
+    the.samples[i,] <- xi
+    the.weights[i] <- exp(wi)  # Transform back using exp
+    
+  }
+  
+  # Transform to x, y, z coords:
+  samp.coords <- t(sapply(1:nrow(the.samples),function(xx){spherical.to.cartesian(the.samples[xx,1],the.samples[xx,2],the.samples[xx,3])}))
+  samp.coords <- cbind(samp.coords, the.samples, the.weights)
+  
+  colnames(samp.coords) <- c("x","y","z","r","theta","phi", "wt")
+  
+  print(paste("The final sample size is:", nrow(samp.coords)))
+  
+  return(samp.coords)
+  
+}
+
+
+# Sample the wave function's density using AIS, but now do in parallel
+sample.orbital.density.ais.parallel<-function(nqn, lqn, mqn, orb.func.info, printQ=FALSE, num.processes=1) {
+  
+  rsqf  <- orb.func.info$R.sq.func
+  thsqf <- orb.func.info$Theta.sq.func
+  phsqf <- orb.func.info$Phi.sq.func
+  rmx   <- max(orb.func.info$r.axis)
+  
+  # Work on the log-scale:
+  
+  # Target density f(0)
+  logf0 <- function(an.x){
+    
+    loglik0 <- 
+      log(an.x[1]^2    * abs(rsqf(an.x[1])) )  +  # abs-ing incase splines went a little negative 
+      log(sin(an.x[2]) * abs(thsqf(an.x[2])) ) + 
+      log(               abs(phsqf(an.x[3])) )
+    
+    return(loglik0)
+  }
+  
+  # Starting (Importance) density f(n)
+  logfn <- function(an.x){
+    
+    return(
+      dunif(an.x[1], min = 0, max = rmx,  log = T) + 
+        dunif(an.x[2], min = 0, max = pi,   log = T) + 
+        dunif(an.x[3], min = 0, max = 2*pi, log = T)
+    )
+    
+  }
+  
+  # Generates an initial starting point for a sample from importance distribution, x ~ p(n)
+  pn <- function(){
+    
+    return(
+      c(runif(1, min = 0, max = rmx), 
+        runif(1, min = 0, max = pi), 
+        runif(1, min = 0, max = 2*pi))
+    )
+    
+  }
+  
+  # Intermediate (annealing) densities
+  logfj <- function(an.x, a.beta){
+    return(a.beta * logf0(an.x) + (1-a.beta) * logfn(an.x))
+  }
+  
+  # Transition kernel to bridge from starting density to target density with short MCMCa
+  TransK <- function(an.x, a.beta, n.steps=10){
+    for(t in 1:n.steps) {
+      
+      # Proposal
+      x.prime <- c(NA,NA,NA)
+      
+      x.prime[1] <- an.x[1] + runif(1, min = -rmx, max = rmx)
+      if(x.prime[1] < 0) {
+        x.prime[1] <- x.prime[1] %% rmx  
+      } else if(x.prime[1] > rmx) {
+        x.prime[1] <- x.prime[1] %% rmx
+      }
+      
+      x.prime[2] <- an.x[2] + runif(1, min = -pi, max = pi)
+      if(x.prime[2] < 0) {
+        x.prime[2] <- x.prime[2] %% pi
+      } else if(x.prime[2] > pi){
+        x.prime[2] <- x.prime[2] %% pi
+      }
+      
+      x.prime[3] <- an.x[3] + runif(1, min = -2*pi, max = 2*pi)
+      if(x.prime[3] < 0) {
+        x.prime[3] <- x.prime[3] %% 2*pi
+      } else if(x.prime[3] > 2*pi){
+        x.prime[3] <- x.prime[3] %% 2*pi
+      }
+      
+      # log Acceptance prob
+      log.accp <- logfj(x.prime, a.beta) - logfj(an.x, a.beta)
+      
+      if(is.na( log.accp )){
+        print("Problem!!!!!!!")
+        print(paste("beta:", a.beta))
+        print(paste("x:", an.x))
+        print(paste("log f_j(x, beta)", lf_j(an.x, a.beta)))
+        print(paste("x.prime:", x.prime))
+        print(paste("log f_j(x.prime, beta)", lf_j(x.prime, a.beta)))
+      }
+      
+      out.x <- an.x
+      if(log(runif(1)) < log.accp){
+        out.x <- x.prime
+      }
+      
+    }
+    
+    return(out.x)
+    
+  }
+  
+  #-----------------
+  # Do the sampling
+  #-----------------
+  n.beta    <- 50 # Bridge over this many intermediate densities
+  beta.seq  <- seq(from = 0, to = 1, length.out = n.beta) # Inverse temp sequence
+  n.samples <- 5000 # Sample size sought from target density
+  
+  # Sample function for parallel loop kernel. Every execution of this produces a sample:
+  a.sample <- function() {
+    
+    # Sample initial point from pn(x)
+    xi <- pn()
+    wi <- 1
+    
+    for(jj in 2:length(beta.seq)){
+      
+      # Transition
+      xi <- TransK(xi, beta.seq[jj], n.steps=5)
+      
+      # Compute weight in log space (log-sum):
+      wi <- wi + ( logfj(xi, beta.seq[jj]) - logfj(xi, beta.seq[jj-1]) )
+    }
+    
+    return(c(xi, exp(wi)))
+    
+  }
+  
+  # Run parallel loop here with progress bar
+  cl <- makeSOCKcluster(num.processes)
+  registerDoSNOW(cl)
+  pb <- txtProgressBar(min=1, max=n.samples, style=3)
+  progress <- function(n) setTxtProgressBar(pb, n)
+  opts <- list(progress=progress)
+  
+  the.samples <- 
+    foreach(i=1:n.samples,  .options.snow=opts, .combine='rbind') %dopar% {
+      a.sample()
+    }
+  close(pb)
+  stopCluster(cl)
+  
+  # Transform to x, y, z coords:
+  samp.coords <- t(sapply(1:nrow(the.samples),function(xx){spherical.to.cartesian(the.samples[xx,1],the.samples[xx,2],the.samples[xx,3])}))
+  samp.coords <- cbind(samp.coords, the.samples)
+  
+  colnames(samp.coords) <- c("x","y","z","r","theta","phi", "wt")
+  
+  print(paste("The final sample size is:", nrow(samp.coords)))
+  
+  return(samp.coords)
   
 }
