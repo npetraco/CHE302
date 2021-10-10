@@ -1,11 +1,10 @@
-#source("/Users/npetraco/latex/class/chem302/R/oscillators/Numerov.functions.R")
-source(file.choose())
+library(che302r)
 
 #Domain (x-axis):
-dx    <- 0.01                           #Increment on x-axis
-x.min <- (-5)                         #Start of x-axis. Well into (left) classically forbidden region
-x.max <- 5                          #End of x-axis. Well into the (right) classically forbidden region 
-x     <- seq(from=x.min,to=x.max,by=dx)  #x-axis
+dx    <- 0.01                            # Increment on x-axis
+x.min <- (-5)                            # Start of x-axis. Well into (left) classically forbidden region
+x.max <- 5                               # End of x-axis. Well into the (right) classically forbidden region 
+x     <- seq(from=x.min,to=x.max,by=dx)  # x-axis
 
 #Potential energy function
 #Your choices are "box", "harmonic", "anharmonic":
@@ -13,8 +12,8 @@ potential<-"harmonic"
 plot(x,V(x,potential))
 
 #Numerov's procedure:
-state        <- 0                      #State you want, starting from 0. It is an integer: 0,1,2,3,...etc. I.E., number of nodes
-Guess.Energy <- (0)             #Initial guess for energy of the state
+state        <- 0                      # State you want, starting from 0. It is an integer: 0,1,2,3,...etc. I.E., number of nodes
+Guess.Energy <- (0)                    # Initial guess for energy of the state
 max.iter     <- 40
 psi.info     <- numerov.procedure(x,dx,potential,state,Guess.Energy,max.iter,delay.time=0.00)
 
