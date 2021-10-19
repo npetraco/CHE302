@@ -3,7 +3,7 @@ library(che302r)
 # Domain (x-axis):
 dx    <- 0.01                        # Increment on x-axis
 x.min <- (0)                         # Start of x-axis. Well into (left) classically forbidden region
-x.max <- 10                          # End of x-axis. Well into the (right) classically forbidden region 
+x.max <- 1.5                          # End of x-axis. Well into the (right) classically forbidden region 
 x     <- seq(from=x.min,to=x.max,by=dx)  #x-axis
 
 # Potential energy function
@@ -19,3 +19,4 @@ psi.info     <- numerov.procedure(x,dx,potential,state,Guess.Energy,max.iter,del
 
 # Approximately Normalize Psi:
 Npsi.info <- approx.normalize(psi.info)
+
