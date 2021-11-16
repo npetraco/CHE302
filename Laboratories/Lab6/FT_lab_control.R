@@ -1,4 +1,3 @@
-#source("ft_spectroscopy.func.R")
 library(che302r)
 
 # Load the interferogram:
