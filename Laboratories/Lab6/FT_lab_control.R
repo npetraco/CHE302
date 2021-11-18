@@ -1,20 +1,20 @@
 library(che302r)
 
 # Load the interferogram:
-dat <- read.csv("https://raw.githubusercontent.com/npetraco/CHE302/master/Laboratories/Lab6/interferogram.csv", header=T)
-interferogram <- dat[,2]
+interferogram <- read.csv("https://raw.githubusercontent.com/npetraco/CHE302/master/Laboratories/Lab6/interferogram4.csv", header=T)
+interferogram <- as.matrix(interferogram)
 
 # Plot the interferogram:
 plot(1:length(interferogram), interferogram, typ="l")
-plot(interferogram[2400:2600], typ="l") # Zoom
 
 # Fourier transform the interfrogram:
-spect<-fft.interferogram2(interferogram, plot.typ="%T")
-spect<-fft.interferogram2(interferogram, plot.typ="Absorbance")
+spect.info <- fft.interferogram2(interferogram, plot.typ="Absorbance")
 
-# What molecule could this be?
-head(spect[[1]])
-plot(spect[[2]])
-plot(spect[[2]][,2])
-peak.idxs <- which(spect[[2]][,2] > 1)
-spect[[2]][peak.idxs,1]
+# Examine the spectrum:
+spect <- spect.info[,c(1,2)]
+plot.spectrum(spect)
+find.peaks(spect, spectrum.typ = "Absorbance", deriv.tol = 0.0001, plotQ = T, peak.tol = 0.0025)
+
+spect2 <- spect.info[,c(1,3)]
+plot.spectrum(spect2)
+find.peaks(spect2, spectrum.typ = "%T", deriv.tol = 0.0001, plotQ = T, peak.tol = 97.5)
