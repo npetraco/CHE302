@@ -1,4 +1,3 @@
-#library(rmarkdown)
 library(che302r)
 
 # 1.
