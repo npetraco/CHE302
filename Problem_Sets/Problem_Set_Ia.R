@@ -1,3 +1,4 @@
+#library(rmarkdown)
 library(che302r)
 
 # 1.
@@ -7,6 +8,7 @@ pN
 
 vN <- pN/mN
 vN
+
 
 # 2.
 lam <- 350e-9
@@ -20,6 +22,7 @@ pH2 <- pph
 vH2 <- pH2/mH2
 vH2
 
+
 # 3.
 dv <- 1000
 dp <- mP*dv
@@ -27,6 +30,7 @@ dp
 
 dx <-  hb/(2*dp)
 dx
+
 
 # 4.
 lam <- 525e-9
@@ -36,7 +40,8 @@ Eph # Energy per photon
 # 500 W laser on for 10 s
 ph <- 500 * (1/Eph) * 10 # number of photons spit out in 10s
 ph
-ph/N.A                       # mols of photons
+ph/N.A                   # mols of photons
+
 
 # 5.
 # a.
@@ -62,22 +67,21 @@ laser.pow * pulse.time * 10
 # 6.
 Phi    <- 2.14              # Work function in eV
 lambda <- 300e-9            # Photon wavelength
-#lambda <- 600e-9           # Photon wavelength
-me     <- 9.1093837015e-31  # Mass e-
+#lambda <- 600e-9           # The other Photon's wavelength
+
 
 PhiJ <- Phi * 1.602177e-19 # Convert Phi to J
-Eph  <- h * cl/lambda
+Eph  <- h * cl/lambda      
+Eph                        # Energy of the photon
 
-# KE of the kicked out e-
 KEe <- Eph - PhiJ
-KEe
+KEe                        # KE of the kicked out e-
 
 
 # 7.
 Phi    <- 3.84              # Work function in eV
 lambda <- 170e-12           # Photon wavelength
 #lambda <- 170e-6           # Photon wavelength
-me     <- 9.1093837015e-31  # Mass e-
 
 PhiJ <- Phi * 1.602177e-19 # Convert Phi to J
 Eph  <- h * cl/lambda
@@ -90,6 +94,7 @@ KEe
 ve <- sqrt(2*(Eph - PhiJ)/me)
 ve
 
+
 # 8.
 # 1e- accelerated by 134V
 # 1V = 1J/C
@@ -100,6 +105,7 @@ Eelec
 pelec <- Eelec/cl
 pelec
 
+
 # 9.
 dx <- 150e-12
 dp <- hb/(2*dx)
@@ -108,18 +114,20 @@ dp
 dv <- dp/me
 dv
 
+
 # 10.
 dt <- 1e-9
 dE <- hb/(2*dt)
 dE
 
+
 # 11.
-planck.distribution(x.min = 0.1e-9, x.max = 200000e-9, Temp = 100, typ = "wavelength", plotQ = T)
-planck.distribution(x.min = 0.1e-9, x.max = 200000e-9, Temp = 1000, typ = "wavelength", plotQ = T)
-planck.distribution(x.min = 0.1e-9, x.max = 200000e-9, Temp = 10000, typ = "wavelength", plotQ = T)
+k100   <- planck.distribution(x.min = 0.1e-9, x.max = 200000e-9, Temp = 100, typ = "wavelength", plotQ = T)
+k1000  <- planck.distribution(x.min = 0.1e-9, x.max = 200000e-9, Temp = 1000, typ = "wavelength", plotQ = T)
+k10000 <- planck.distribution(x.min = 0.1e-9, x.max = 200000e-9, Temp = 10000, typ = "wavelength", plotQ = T)
 
 
-# 12.
+# 13.
 # a. True
 # b. False
 # c. False
