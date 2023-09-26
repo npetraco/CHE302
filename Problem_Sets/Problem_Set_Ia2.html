@@ -112,9 +112,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>lam <span class="ot">&lt;-</span> <span class="fl">3e-3</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pN  <span class="ot">&lt;-</span> h<span class="sc">/</span>lam</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pN <span class="co"># momentum of neutron</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.208689e-31</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vN <span class="ot">&lt;-</span> pN<span class="sc">/</span>mN</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>vN <span class="co"># speed of neutron</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.0001318678</code></pre>
 </div>
 </div>
 </section>
@@ -124,20 +129,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="compute-the-momentum-of-a-photon-with-a-wavelength-of-350-nm.-what-speed-does-a-hydrogen-molecule-h2-must-travel-at-to-have-the-same-momentum" class="level4">
 <h4 class="anchored" data-anchor-id="compute-the-momentum-of-a-photon-with-a-wavelength-of-350-nm.-what-speed-does-a-hydrogen-molecule-h2-must-travel-at-to-have-the-same-momentum">Compute the momentum of a photon with a wavelength of <span class="math inline">\(350 \ nm\)</span>. What speed does a hydrogen molecule (H<sub>2</sub>) must travel at to have the same momentum?</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>lam <span class="ot">&lt;-</span> <span class="fl">350e-9</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pph <span class="ot">&lt;-</span> h<span class="sc">/</span>lam</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>pph <span class="co"># momentum of photon</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lam <span class="ot">&lt;-</span> <span class="fl">350e-9</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pph <span class="ot">&lt;-</span> h<span class="sc">/</span>lam</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>pph <span class="co"># momentum of photon</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.893162e-27</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mH2 <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>mP <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>me</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mH2 <span class="co"># mass of hydrogen molecule</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mH2 <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>mP <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>me</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>mH2 <span class="co"># mass of hydrogen molecule</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.347066e-27</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pH2 <span class="ot">&lt;-</span> pph</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>vH2 <span class="ot">&lt;-</span> pH2<span class="sc">/</span>mH2</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>vH2 <span class="co"># speed of hydrogen molecule</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pH2 <span class="ot">&lt;-</span> pph     <span class="co"># hydrogen molecule momentum is same as photon momentum</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>vH2 <span class="ot">&lt;-</span> pH2<span class="sc">/</span>mH2</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>vH2            <span class="co"># speed of hydrogen molecule</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5656185</code></pre>
 </div>
@@ -149,14 +154,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-speed-of-a-proton-is-measured-to-be-4.5-times-105-ms-pm-1000-ms.-what-is-the-minimum-uncertainty-in-its-position" class="level4">
 <h4 class="anchored" data-anchor-id="the-speed-of-a-proton-is-measured-to-be-4.5-times-105-ms-pm-1000-ms.-what-is-the-minimum-uncertainty-in-its-position">The speed of a proton is measured to be <span class="math inline">\(4.5 \times 10^5 \ m/s \pm 1000 \ m/s\)</span>. What is the minimum uncertainty in its position?</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dv <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>dp <span class="ot">&lt;-</span> mP<span class="sc">*</span>dv</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>dp <span class="co"># uncertainty in momentum</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dv <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>dp <span class="ot">&lt;-</span> mP<span class="sc">*</span>dv</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>dp <span class="co"># uncertainty in momentum</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.672622e-24</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dx <span class="ot">&lt;-</span>  hb<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>dp)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>dx <span class="co"># uncertainty in position</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>dx <span class="ot">&lt;-</span>  hb<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>dp)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>dx <span class="co"># uncertainty in position</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.15245e-11</code></pre>
 </div>
@@ -168,9 +173,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="a-500-w-green-laser-525-nm-is-turned-on-for-10-s.-how-many-photons-does-it-emit" class="level4">
 <h4 class="anchored" data-anchor-id="a-500-w-green-laser-525-nm-is-turned-on-for-10-s.-how-many-photons-does-it-emit">A <span class="math inline">\(500 \ W\)</span> green laser (<span class="math inline">\(525 \ nm\)</span>) is turned on for <span class="math inline">\(10 \ s\)</span>. How many photons does it emit?</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>lam <span class="ot">&lt;-</span> <span class="fl">525e-9</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Eph <span class="ot">&lt;-</span> h <span class="sc">*</span> cl<span class="sc">/</span>lam</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>Eph <span class="co"># Energy per photon</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>lam <span class="ot">&lt;-</span> <span class="fl">525e-9</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>Eph <span class="ot">&lt;-</span> h <span class="sc">*</span> cl<span class="sc">/</span>lam</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>Eph <span class="co"># Energy per photon</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.783705e-19</code></pre>
 </div>
@@ -179,13 +184,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="how-many-mols-of-photons-is-this" class="level4">
 <h4 class="anchored" data-anchor-id="how-many-mols-of-photons-is-this">How many mols of photons is this?</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 500 W laser on for 10 s</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ph <span class="ot">&lt;-</span> <span class="dv">500</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>Eph) <span class="sc">*</span> <span class="dv">10</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>ph                       <span class="co"># number of photons spit out in 10s</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 500 W laser on for 10 s</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ph <span class="ot">&lt;-</span> <span class="dv">500</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>Eph) <span class="sc">*</span> <span class="dv">10</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>ph                       <span class="co"># number of photons spit out in 10s</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.321456e+22</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ph<span class="sc">/</span>N.A                   <span class="co"># mols of photons</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ph<span class="sc">/</span>N.A                   <span class="co"># mols of photons</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.02194329</code></pre>
 </div>
@@ -199,10 +204,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="a.-compute-the-energy-form-a-2-times-10-8-s-pulse." class="level5">
 <h5 class="anchored" data-anchor-id="a.-compute-the-energy-form-a-2-times-10-8-s-pulse.">a. Compute the energy form a <span class="math inline">\(2 \times 10^{-8} \ s\)</span> pulse.</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a.</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>laser.pow  <span class="ot">&lt;-</span> <span class="fl">5e6</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>pulse.time <span class="ot">&lt;-</span> <span class="fl">2e-8</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>laser.pow <span class="sc">*</span> pulse.time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a.</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>laser.pow  <span class="ot">&lt;-</span> <span class="fl">5e6</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>pulse.time <span class="ot">&lt;-</span> <span class="fl">2e-8</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>laser.pow <span class="sc">*</span> pulse.time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1</code></pre>
 </div>
@@ -211,21 +216,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="b.-compute-the-energy-of-one-photon-from-this-laser." class="level5">
 <h5 class="anchored" data-anchor-id="b.-compute-the-energy-of-one-photon-from-this-laser.">b. Compute the energy of one photon from this laser.</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#b.</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>lam <span class="ot">&lt;-</span> <span class="fl">1064e-9</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>Eph <span class="ot">&lt;-</span> h <span class="sc">*</span> cl<span class="sc">/</span>lam</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>Eph <span class="co"># Energy per photon</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#b.</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>lam <span class="ot">&lt;-</span> <span class="fl">1064e-9</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>Eph <span class="ot">&lt;-</span> h <span class="sc">*</span> cl<span class="sc">/</span>lam</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>Eph <span class="co"># Energy per photon</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.86696e-19</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># alternative for a.</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 5e6 W laser on for 2e-8 s</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>ph <span class="ot">&lt;-</span> <span class="fl">5e6</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>Eph) <span class="sc">*</span> <span class="fl">2e-8</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>ph <span class="co"># number of photons spit out in 2e-8 s pulse</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># alternative for a.</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 5e6 W laser on for 2e-8 s</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>ph <span class="ot">&lt;-</span> <span class="fl">5e6</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>Eph) <span class="sc">*</span> <span class="fl">2e-8</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>ph <span class="co"># number of photons spit out in 2e-8 s pulse</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5.356302e+17</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>Eph <span class="sc">*</span> ph <span class="co"># Energy in the 2e-8 s pulse</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>Eph <span class="sc">*</span> ph <span class="co"># Energy in the 2e-8 s pulse</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1</code></pre>
 </div>
@@ -234,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="c.-compute-the-number-of-photons-in-10-pulses." class="level5">
 <h5 class="anchored" data-anchor-id="c.-compute-the-number-of-photons-in-10-pulses.">c.&nbsp;Compute the number of photons in 10 pulses.</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>laser.pow <span class="sc">*</span> pulse.time <span class="sc">*</span> <span class="dv">10</span> <span class="co">#Energy per pulse * 10 pulses</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>laser.pow <span class="sc">*</span> pulse.time <span class="sc">*</span> <span class="dv">10</span> <span class="co">#Energy per pulse * 10 pulses</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
@@ -247,18 +252,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-work-function-for-metallic-cesium-is-2.14-ev.-compute-the-k.e.-and-speed-of-and-electron-hit-by-a-photon-of-wavelength-300-nm.-what-if-the-wavelength-of-the-photon-is-600-nm" class="level4">
 <h4 class="anchored" data-anchor-id="the-work-function-for-metallic-cesium-is-2.14-ev.-compute-the-k.e.-and-speed-of-and-electron-hit-by-a-photon-of-wavelength-300-nm.-what-if-the-wavelength-of-the-photon-is-600-nm">The work function for metallic Cesium is <span class="math inline">\(2.14 \ eV\)</span>. Compute the K.E. and speed of and electron hit by a photon of wavelength <span class="math inline">\(300 \ nm\)</span>. What if the wavelength of the photon is <span class="math inline">\(600 \ nm\)</span>?</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>Phi    <span class="ot">&lt;-</span> <span class="fl">2.14</span>              <span class="co"># Work function in eV</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fl">300e-9</span>            <span class="co"># Photon wavelength</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co">#lambda &lt;- 600e-9           # The other Photon's wavelength</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>PhiJ <span class="ot">&lt;-</span> Phi <span class="sc">*</span> <span class="fl">1.602177e-19</span> <span class="co"># Convert Phi to Joules</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>Eph  <span class="ot">&lt;-</span> h <span class="sc">*</span> cl<span class="sc">/</span>lambda      </span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>Eph                        <span class="co"># Energy of the photon</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Phi    <span class="ot">&lt;-</span> <span class="fl">2.14</span>              <span class="co"># Work function in eV</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fl">300e-9</span>            <span class="co"># Photon wavelength</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">#lambda &lt;- 600e-9           # The other Photon's wavelength</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>PhiJ <span class="ot">&lt;-</span> Phi <span class="sc">*</span> <span class="fl">1.602177e-19</span> <span class="co"># Convert Phi to Joules</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>Eph  <span class="ot">&lt;-</span> h <span class="sc">*</span> cl<span class="sc">/</span>lambda      </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>Eph                        <span class="co"># Energy of the photon</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6.621484e-19</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>KEe <span class="ot">&lt;-</span> Eph <span class="sc">-</span> PhiJ</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>KEe                        <span class="co"># KE of the kicked out e-</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>KEe <span class="ot">&lt;-</span> Eph <span class="sc">-</span> PhiJ</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>KEe                        <span class="co"># KE of the kicked out e-</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.192825e-19</code></pre>
 </div>
@@ -270,23 +275,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-work-function-for-metallic-francium-is-3.84-ev-1-ev-1.602677-times-10-19-j.-compute-the-k.e.-and-speed-of-and-electron-hit-by-a-photon-of-wavelength-170-pm.-what-if-the-wavelength-of-the-photon-is-170-mu-m" class="level4">
 <h4 class="anchored" data-anchor-id="the-work-function-for-metallic-francium-is-3.84-ev-1-ev-1.602677-times-10-19-j.-compute-the-k.e.-and-speed-of-and-electron-hit-by-a-photon-of-wavelength-170-pm.-what-if-the-wavelength-of-the-photon-is-170-mu-m">The work function for metallic Francium is <span class="math inline">\(3.84 \ eV\)</span> <span class="math inline">\((1 \ eV = 1.602677 \times 10^{-19} J)\)</span>. Compute the K.E. and speed of and electron hit by a photon of wavelength <span class="math inline">\(170 \  pm\)</span>. What if the wavelength of the photon is <span class="math inline">\(170 \ \mu m\)</span>?</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>Phi    <span class="ot">&lt;-</span> <span class="fl">3.84</span>              <span class="co"># Work function in eV</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fl">170e-12</span>           <span class="co"># Photon wavelength</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co">#lambda &lt;- 170e-6           # Photon wavelength</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>me     <span class="ot">&lt;-</span> <span class="fl">9.1093837015e-31</span>  <span class="co"># Mass e-</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>PhiJ <span class="ot">&lt;-</span> Phi <span class="sc">*</span> <span class="fl">1.602177e-19</span> <span class="co"># Convert Phi to J</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>Eph  <span class="ot">&lt;-</span> h <span class="sc">*</span> cl<span class="sc">/</span>lambda</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="co"># KE of the kicked out e-</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>KEe <span class="ot">&lt;-</span> Eph <span class="sc">-</span> PhiJ</span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>KEe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Phi    <span class="ot">&lt;-</span> <span class="fl">3.84</span>              <span class="co"># Work function in eV</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fl">170e-12</span>           <span class="co"># Photon wavelength</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co">#lambda &lt;- 170e-6           # Photon wavelength</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>me     <span class="ot">&lt;-</span> <span class="fl">9.1093837015e-31</span>  <span class="co"># Mass e-</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>PhiJ <span class="ot">&lt;-</span> Phi <span class="sc">*</span> <span class="fl">1.602177e-19</span> <span class="co"># Convert Phi to J</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>Eph  <span class="ot">&lt;-</span> h <span class="sc">*</span> cl<span class="sc">/</span>lambda</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># KE of the kicked out e-</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>KEe <span class="ot">&lt;-</span> Eph <span class="sc">-</span> PhiJ</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>KEe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.167882e-15</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Speed of the kicked out e-</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>ve <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>(Eph <span class="sc">-</span> PhiJ)<span class="sc">/</span>me)</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>ve</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Speed of the kicked out e-</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>ve <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>(Eph <span class="sc">-</span> PhiJ)<span class="sc">/</span>me)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>ve</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 50637234</code></pre>
 </div>
@@ -298,16 +303,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="compute-the-debroglie-wavelength-of-an-electron-accelerated-through-a-potential-of-134-v-1-v-1-jc." class="level4">
 <h4 class="anchored" data-anchor-id="compute-the-debroglie-wavelength-of-an-electron-accelerated-through-a-potential-of-134-v-1-v-1-jc.">Compute the DeBroglie wavelength of an electron accelerated through a potential of <span class="math inline">\(134 \ V\)</span> (<span class="math inline">\(1 \ V = 1 \ J/C\)</span>).</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1e- accelerated by 134V</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1V = 1J/C</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>Eelec <span class="ot">&lt;-</span> <span class="dv">134</span> <span class="sc">*</span> ec <span class="co"># ec = charge of an electron in Coulombs</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>Eelec             <span class="co"># energy of an electron accelerated through 134V potential</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1e- accelerated by 134V</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1V = 1J/C</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>Eelec <span class="ot">&lt;-</span> <span class="dv">134</span> <span class="sc">*</span> ec <span class="co"># ec = charge of an electron in Coulombs</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>Eelec             <span class="co"># energy of an electron accelerated through 134V potential</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.146917e-17</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># From E=hc/lambda and p=h/lambda:</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>pelec <span class="ot">&lt;-</span> Eelec<span class="sc">/</span>cl</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>pelec             <span class="co"># momentum of the electron</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># From E=hc/lambda and p=h/lambda:</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>pelec <span class="ot">&lt;-</span> Eelec<span class="sc">/</span>cl</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>pelec             <span class="co"># momentum of the electron</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7.161343e-26</code></pre>
 </div>
@@ -319,14 +324,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="if-the-minimum-uncertainty-in-the-position-of-an-electron-on-a-straight-wire-is-150-pm-compute-the-minimum-uncertainty-in-its-momentum-and-speed." class="level4">
 <h4 class="anchored" data-anchor-id="if-the-minimum-uncertainty-in-the-position-of-an-electron-on-a-straight-wire-is-150-pm-compute-the-minimum-uncertainty-in-its-momentum-and-speed.">If the minimum uncertainty in the position of an electron on a straight wire is <span class="math inline">\(150 \ pm\)</span> compute the minimum uncertainty in its momentum and speed.</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>dx <span class="ot">&lt;-</span> <span class="fl">150e-12</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>dp <span class="ot">&lt;-</span> hb<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>dx)</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>dp              <span class="co"># minimum uncertainty in momentum</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>dx <span class="ot">&lt;-</span> <span class="fl">150e-12</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>dp <span class="ot">&lt;-</span> hb<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>dx)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>dp              <span class="co"># minimum uncertainty in momentum</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.515238e-25</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>dv <span class="ot">&lt;-</span> dp<span class="sc">/</span>me</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>dv              <span class="co"># minimum uncertainty in speed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>dv <span class="ot">&lt;-</span> dp<span class="sc">/</span>me</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>dv              <span class="co"># minimum uncertainty in speed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 385892</code></pre>
 </div>
@@ -344,9 +349,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="if-the-uncertainty-in-the-lifetime-of-an-excited-state-is-1-times-10-9-s-what-is-the-uncertainty-in-the-states-energy" class="level4">
 <h4 class="anchored" data-anchor-id="if-the-uncertainty-in-the-lifetime-of-an-excited-state-is-1-times-10-9-s-what-is-the-uncertainty-in-the-states-energy">If the uncertainty in the lifetime of an excited state is <span class="math inline">\(1 \times 10^{-9} \ s\)</span> what is the uncertainty in the state’s energy?</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fl">1e-9</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>dE <span class="ot">&lt;-</span> hb<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>dt)</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>dE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fl">1e-9</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>dE <span class="ot">&lt;-</span> hb<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>dt)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>dE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5.272857e-26</code></pre>
 </div>
@@ -360,7 +365,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="black-body-for-t-100-k" class="level5">
 <h5 class="anchored" data-anchor-id="black-body-for-t-100-k">1. Black body for <span class="math inline">\(T = 100 \ K\)</span>:</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>k100   <span class="ot">&lt;-</span> <span class="fu">planck.distribution</span>(<span class="at">x.min =</span> <span class="fl">0.1e-9</span>, <span class="at">x.max =</span> <span class="fl">200000e-9</span>, <span class="at">Temp =</span> <span class="dv">100</span>, <span class="at">typ =</span> <span class="st">"wavelength"</span>, <span class="at">plotQ =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>k100   <span class="ot">&lt;-</span> <span class="fu">planck.distribution</span>(<span class="at">x.min =</span> <span class="fl">0.1e-9</span>, <span class="at">x.max =</span> <span class="fl">200000e-9</span>, <span class="at">Temp =</span> <span class="dv">100</span>, <span class="at">typ =</span> <span class="st">"wavelength"</span>, <span class="at">plotQ =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Problem_Set_Ia2_files/figure-html/Problem%2011a1-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -369,7 +374,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="black-body-for-t-1000-k" class="level5">
 <h5 class="anchored" data-anchor-id="black-body-for-t-1000-k">2. Black body for <span class="math inline">\(T = 1000 \ K\)</span>:</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>k1000  <span class="ot">&lt;-</span> <span class="fu">planck.distribution</span>(<span class="at">x.min =</span> <span class="fl">0.1e-9</span>, <span class="at">x.max =</span> <span class="fl">200000e-9</span>, <span class="at">Temp =</span> <span class="dv">1000</span>, <span class="at">typ =</span> <span class="st">"wavelength"</span>, <span class="at">plotQ =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>k1000  <span class="ot">&lt;-</span> <span class="fu">planck.distribution</span>(<span class="at">x.min =</span> <span class="fl">0.1e-9</span>, <span class="at">x.max =</span> <span class="fl">200000e-9</span>, <span class="at">Temp =</span> <span class="dv">1000</span>, <span class="at">typ =</span> <span class="st">"wavelength"</span>, <span class="at">plotQ =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Problem_Set_Ia2_files/figure-html/Problem%2011a2-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -378,7 +383,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="black-body-for-t-10000-k" class="level5">
 <h5 class="anchored" data-anchor-id="black-body-for-t-10000-k">3. Black body for <span class="math inline">\(T = 10000 \ K\)</span>:</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>k10000 <span class="ot">&lt;-</span> <span class="fu">planck.distribution</span>(<span class="at">x.min =</span> <span class="fl">0.1e-9</span>, <span class="at">x.max =</span> <span class="fl">200000e-9</span>, <span class="at">Temp =</span> <span class="dv">10000</span>, <span class="at">typ =</span> <span class="st">"wavelength"</span>, <span class="at">plotQ =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>k10000 <span class="ot">&lt;-</span> <span class="fu">planck.distribution</span>(<span class="at">x.min =</span> <span class="fl">0.1e-9</span>, <span class="at">x.max =</span> <span class="fl">200000e-9</span>, <span class="at">Temp =</span> <span class="dv">10000</span>, <span class="at">typ =</span> <span class="st">"wavelength"</span>, <span class="at">plotQ =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Problem_Set_Ia2_files/figure-html/Problem%2011a3-1.png" class="img-fluid" width="672"></p>
 </div>
