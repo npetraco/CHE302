@@ -60,7 +60,7 @@ ph
 Eph * ph                   # Energy in the 2e-8 s pulse
 
 # c. Energy per pulse * 10 pulses
-laser.pow * pulse.time * 10
+laser.pow * (1/Eph) * pulse.time * 10
 
 
 # 6.

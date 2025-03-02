@@ -223,7 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.86696e-19</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># alternative for a.</span></span>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># **** alternative solution for a. since we now know the energy per photon from b. ****</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 5e6 W laser on for 2e-8 s</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>ph <span class="ot">&lt;-</span> <span class="fl">5e6</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>Eph) <span class="sc">*</span> <span class="fl">2e-8</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>ph <span class="co"># number of photons spit out in 2e-8 s pulse</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -239,9 +239,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="c.-compute-the-number-of-photons-in-10-pulses." class="level5">
 <h5 class="anchored" data-anchor-id="c.-compute-the-number-of-photons-in-10-pulses.">c.&nbsp;Compute the number of photons in 10 pulses.</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>laser.pow <span class="sc">*</span> pulse.time <span class="sc">*</span> <span class="dv">10</span> <span class="co">#Energy per pulse * 10 pulses</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Laser power (J/s) / energy per photon (J/ph) * pulse time (s) * 10 pulses:</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>laser.pow <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>Eph) <span class="sc">*</span> pulse.time <span class="sc">*</span> <span class="dv">10</span> <span class="co"># Number of photons in 10 pulses:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1</code></pre>
+<pre><code>[1] 5.3563e+18</code></pre>
 </div>
 </div>
 </section>
