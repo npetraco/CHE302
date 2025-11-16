@@ -12,9 +12,9 @@ spect.info <- fft.interferogram2(interferogram, plot.typ="Absorbance")
 
 # Examine the spectrum:
 spect <- spect.info[,c(1,2)]
-plot.spectrum(spect)
+plot_spectrum(spect)
 find.peaks(spect, spectrum.typ = "Absorbance", deriv.tol = 0.0001, plotQ = T, peak.tol = 0.0025)
 
 spect2 <- spect.info[,c(1,3)]
-plot.spectrum(spect2)
+plot_spectrum(spect2)
 find.peaks(spect2, spectrum.typ = "%T", deriv.tol = 0.0001, plotQ = T, peak.tol = 97.5)
